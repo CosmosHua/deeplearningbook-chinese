@@ -388,8 +388,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 
 \glssymbol{DBM}~一个不理想的特性是从中采样是相对困难的。 
-\glssymbol{DBN}~只需要在其顶部的一对层中使用~\glssymbol{mcmc}~采样。
-其他层仅在采样过程末尾涉及，并且只需在一个高效的\gls{ancestral_sampling}过程。
+在一次高效的\gls{ancestral_sampling}过程中，\glssymbol{DBN}~只需要在其顶部的一对层中使用~\glssymbol{mcmc}~采样，而其他层仅在采样过程末尾参与。
 要从~\glssymbol{DBM}~生成样本，必须在所有层中使用~\glssymbol{mcmc}，并且模型的每一层都参与每个\gls{markov_chain}转移。
 
 
@@ -455,7 +454,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 应用这些一般的方程，我们得到以下更新规则（再次忽略\gls{bias_aff}项）：
 \begin{align} \label{eq:2033h1}
- h_j^{(1)} &= \sigma  \Big(  \sum_i v_i \MW_{i,j}^{(1)} 
+ \hat h_j^{(1)} &= \sigma  \Big(  \sum_i v_i \MW_{i,j}^{(1)}
  + \sum_{k^{\prime}} \MW_{j,k^{\prime}}^{(2)} \hat h_{k^{\prime}}^{(2)}  \Big), ~\forall j ,\\
  \label{eq:2034h2}
  \hat h_{k}^{(2)} &=  \sigma  \Big(  \sum_{j^{\prime}} \MW_{j^{\prime},k}^{(2)}
@@ -1509,7 +1508,7 @@ $\vcenter{\hbox{
 \gls{generator_network}学习跟踪其点在某种程度上类似于训练点的流形，而不是最大化特定点的对数概率。
 有点矛盾的是，这意味着模型可以将负无穷大的对数似然分配给测试集，同时仍然表示人类观察者判断为能捕获生成任务本质的流形。
 这不是明显的优点或缺点，并且只要向\gls{generator_network}最后一层所有生成的值添加高斯噪声，就可以保证\gls{generator_network}向所有点分配非零概率。
-以这种方式添加高斯噪声的\gls{generator_network}从相同分布的采样，即使用\gls{generator_network}参数化条件\gls{gaussian_distribution}的均值所获得的分布。
+以这种方式添加高斯噪声的\gls{generator_network}，从中采样的分布，和使用\gls{generator_network}参数化条件\gls{gaussian_distribution}的均值所获得的分布是相同的。
 
 % -- 692 --
 
@@ -1815,7 +1814,7 @@ $\vcenter{\hbox{
 \subsection{回退训练过程}
 \label{sec:walk_back_training_procedure}
 回退训练过程由~\citet{Bengio-et-al-NIPS2013-small} 等人提出，作为一种加速\gls{DAE}生成训练收敛的方法。
-不像执行一步编码-解码重建，该过程有代替的多个随机编码-解码步骤组成（如在生成\gls{markov_chain}中），以训练样本初始化（正如在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中描述的\gls{contrastive_divergence}算法），并惩罚最后的概率重建（或沿途的所有重建）。
+不像执行一步编码-解码重建，该过程由交替的多个随机编码-解码步骤组成（如在生成\gls{markov_chain}中），以训练样本初始化（正如在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中描述的\gls{contrastive_divergence}算法），并惩罚最后的概率重建（或沿途的所有重建）。
 
 训练$k$个步骤与训练一个步骤是等价的（在实现相同稳态分布的意义上），但是实际上可以更有效地去除来自数据的伪模式。
 

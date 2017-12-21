@@ -129,14 +129,14 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此\eqn
 
 % -- 366 --
 
-\eqnref{eq:105h}可以用两种不同的方式绘制。
-一种方法是为可能在模型的物理实现中存在的部分赋予一个节点，如生物神经网络。
-在这个观点下，网络定义了实时操作的回路，如\figref{fig:chap10_rnn_circuit_unfolded}的左侧，其当前状态可以影响其未来的状态。
-在本章中，我们使用回路图的黑色方块表明在时刻$t$的状态到时刻$t+1$的状态单个时刻延迟中的相互作用。
-另一个绘制~\glssymbol{RNN}~的方法是展开的\gls{computational_graph}，其中每一个组件由许多不同的变量表示，每个\gls{time_step}一个变量，表示在该时间点组件的状态。
+\eqnref{eq:105h}可以用两种不同的方式来绘制。
+一种绘制~\glssymbol{RNN}~的方式是用循环图，对于可能存在于模型的物理实现中的每个组件，都在图中包含其对应的节点。这种方式的一个示例是生物神经网络。
+在这种视角下，网络定义了实时操作的回路，如\figref{fig:chap10_rnn_circuit_unfolded}的左侧，其当前状态可以影响其未来的状态。
+在本章中，我们使用回路图中的黑色方块表示单个\gls{time_step}延时所发生的交互，即从时刻$t$的状态到时刻$t+1$的状态的变化。
+另一种绘制~\glssymbol{RNN}~的方式是用展开的\gls{computational_graph}，其中每一个组件由许多不同的变量表示，每个\gls{time_step}一个变量，用来表示组件在该时间点的状态。
 每个\gls{time_step}的每个变量绘制为\gls{computational_graph}的一个独立节点，如\figref{fig:chap10_rnn_circuit_unfolded}的右侧。
 我们所说的\gls{unfolding}是将左图中的回路映射为右图中包含重复组件的\gls{computational_graph}的操作。
-目前，\gls{unfolded_graph}的大小取决于序列长度。
+这样，\gls{unfolded_graph}的大小取决于序列长度。
 
 我们可以用一个函数$g^{(t)}$代表经$t$步展开后的循环：
 \begin{align}
@@ -663,7 +663,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \label{fig:chap10_rnn_encdec}
 \end{figure}
 
-如果上下文$C$是一个向量，则\gls{encoder}~\glssymbol{RNN}~只是在\secref{sec:modeling_sequences_conditioned_on_context_with_rnns}描述的向量到序列~\glssymbol{RNN}。
+如果上下文$C$是一个向量，则\gls{decoder}~\glssymbol{RNN}~只是在\secref{sec:modeling_sequences_conditioned_on_context_with_rnns}描述的向量到序列~\glssymbol{RNN}。
 正如我们所见，向量到序列~\glssymbol{RNN}~至少有两种接受输入的方法。
 输入可以被提供为~\glssymbol{RNN}~的初始状态，或连接到每个\gls{time_step}中的\gls{hidden_unit}。
 这两种方式也可以结合。
@@ -973,7 +973,7 @@ $d$~\gls{time_step}的\gls{skip_connection}可以确保单元总能被$d$个\gls
 
 \gls{leaky_unit}允许网络在较长持续时间内\emph{积累}信息（诸如用于特定特征或类的线索）。
 然而，一旦该信息被使用，让\gls{NN}\emph{遗忘}旧的状态可能是有用的。
-例如，如果一个序列是由子序列组成，我们希望\gls{leaky_unit}能在各子序列内积累线索，我们需要将状态设置为0以忘记旧状态的的机制。
+例如，如果一个序列是由子序列组成，我们希望\gls{leaky_unit}能在各子序列内积累线索，我们需要将状态设置为0以忘记旧状态的机制。
 我们希望\gls{NN}学会决定何时清除状态，而不是手动决定。
 这就是\gls{gated_rnn}~要做的事。
 
